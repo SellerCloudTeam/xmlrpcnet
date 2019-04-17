@@ -365,7 +365,7 @@ namespace CookComputing.XmlRpc
 
     struct FaultStruct
     {
-      public int faultCode;
+      public string faultCode;
       public string faultString;
     }
 

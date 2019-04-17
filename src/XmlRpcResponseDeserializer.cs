@@ -42,7 +42,7 @@ namespace CookComputing.XmlRpc
 
   struct Fault
   {
-    public int faultCode;
+    public string faultCode;
     public string faultString;
   }
 
@@ -132,20 +132,13 @@ namespace CookComputing.XmlRpc
       var faultStruct = MapHashtable(iter, null, parseStack, mappingAction,
         out parsedType) as XmlRpcStruct;
       object faultCode = faultStruct["faultCode"];
-      object faultString = faultStruct["faultString"];
-      if (faultCode is string)
-      {
-        int value;
-        if (!Int32.TryParse(faultCode as string, out value))
-          throw new XmlRpcInvalidXmlRpcException("faultCode not int or string");
-        faultCode = value;
-      }
-      return new XmlRpcFaultException((int)faultCode, (string)faultString);
+      object faultString = faultStruct["faultString"];      
+      return new XmlRpcFaultException($"{faultCode}", (string)faultString);
     }
 
     struct FaultStruct
     {
-      public int faultCode;
+      public string faultCode;
       public string faultString;
     }
 

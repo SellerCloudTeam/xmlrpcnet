@@ -29,13 +29,13 @@ namespace ntest
   [TestFixture]
   public class ProxyGenTest
   {
-    [TestFixtureSetUp]
+    [OneTimeSetUp]
     public void Setup()
     {
       StateNameService.Start(5678);
     }
 
-    [TestFixtureTearDown]
+    [OneTimeTearDown]
     public void TearDown()
     {
       StateNameService.Stop();
@@ -165,7 +165,7 @@ namespace ntest
       }
       catch (XmlRpcFaultException fex)
       {
-        Assert.AreEqual(1, fex.FaultCode);
+        Assert.AreEqual("1", fex.FaultCode);
         Assert.AreEqual("Invalid state number", fex.FaultString);
       }
     }
@@ -272,7 +272,7 @@ namespace ntest
       }
       catch (XmlRpcFaultException fex)
       {
-        Assert.AreEqual(1, fex.FaultCode);
+        Assert.AreEqual("1", fex.FaultCode);
         Assert.AreEqual("Invalid state number", fex.FaultString);
       }
     }
@@ -292,20 +292,20 @@ namespace ntest
       Assert.AreEqual("Alabama Alaska Arizona", ret);
     }
 
-    [Test]
-    public void FileIOPermission()
-    {
-      FileIOPermission f = new FileIOPermission(PermissionState.Unrestricted);
-      f.Deny();
-      try
-      {
-        IStateName2 proxy = (IStateName2)XmlRpcProxyGen.Create(typeof(IStateName2));
-      }
-      finally
-      {
-        CodeAccessPermission.RevertDeny();
-      }
-    }
+    // [Test]
+    // public void FileIOPermission()
+    // {
+    //   FileIOPermission f = new FileIOPermission(PermissionState.Unrestricted);
+    //   f.Deny();
+    //   try
+    //   {
+    //     IStateName2 proxy = (IStateName2)XmlRpcProxyGen.Create(typeof(IStateName2));
+    //   }
+    //   finally
+    //   {
+    //     CodeAccessPermission.RevertDeny();
+    //   }
+    // }
 
 
 
